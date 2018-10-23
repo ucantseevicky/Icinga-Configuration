@@ -1,14 +1,15 @@
-nstall Icinga on Centos7 - Server monitoring tool
+Author - Vignesh
+
+Install Icinga on Centos7 - Server monitoring tool
 
 DOCUMENTS FOLLOWED:
 
-icinga2 documentation { https://www.icinga.com/docs/icinga2/latest/doc/02-getting-started/}
-Vultr Docs .{ https://www.vultr.com/docs/how-to-install-icinga-2-and-icinga-web-2-on-centos-7}
 PRE-INSTALLATION SETUP:
 
 Initially network connection is enabled, after installation of os.
 This is done by changing permission YES from NO on option ONBOOT
 Location of file edited is /etc/sysconfig/network-scripts/ifcfg-ens33
+
 COMMANDS: . The following commands are used to configure icinga2 in CENTOS 7.
 
   yum install https://packages.icinga.com/epel/icinga-rpm-release-7-latest.noarch.rp                                                                                                          
@@ -61,6 +62,8 @@ COMMANDS: . The following commands are used to configure icinga2 in CENTOS 7.
   yum install rh-php71-php-mysqlnd
   icingacli setup token create
   icingacli setup token show
+  
+  
 After installation, By using the generated token We can access the front end on the browser after following the below steps.
 
 Open the url http:// /icingaweb2/setup
