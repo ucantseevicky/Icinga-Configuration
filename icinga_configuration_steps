@@ -1,0 +1,104 @@
+nstall Icinga on Centos7 - Server monitoring tool
+
+DOCUMENTS FOLLOWED:
+
+icinga2 documentation { https://www.icinga.com/docs/icinga2/latest/doc/02-getting-started/}
+Vultr Docs .{ https://www.vultr.com/docs/how-to-install-icinga-2-and-icinga-web-2-on-centos-7}
+PRE-INSTALLATION SETUP:
+
+Initially network connection is enabled, after installation of os.
+This is done by changing permission YES from NO on option ONBOOT
+Location of file edited is /etc/sysconfig/network-scripts/ifcfg-ens33
+COMMANDS: . The following commands are used to configure icinga2 in CENTOS 7.
+
+  yum install https://packages.icinga.com/epel/icinga-rpm-release-7-latest.noarch.rp                                                                                                          
+  noarch.rpm
+  yum install epel-release
+  yum install icinga2
+  systemctl enable icinga2
+  systemctl start icinga2
+  systemctl status icinga2
+  icinga2 feature list
+  yum install nagios-plugins-all
+  systemctl enable icinga2
+  systemctl start icinga2
+  systemctl status icinga2
+  yum install icinga2-selinux
+  yum install vim-icinga2
+  yum install nano-icinga2
+  systemctl status icinga2
+  yum install mariadb-server mariadb
+  systemctl enable mariadb
+  systemctl start mariadb
+  systemctl status mariadb
+  mysql_secure_installation
+  yum instal icinga2-ido-mysql
+  mysql -u root -p \\---------------------> Data base is created
+  icinga2 feature enable ido-mysql
+  systemctl restart icinga2
+  yum install httpd
+  systemctl enable httpd
+  systemctl start httpd
+  mysql -u root -p icinga < /usr/share/icinga2-ido-mysql/schema/mysql.sql
+  firewall-cmd --add-service=http
+  firerwall-cmd --permanent --add-service=http
+  icinga2 api setup
+  systemctl restart icinga2
+  icinga2 api setup
+  vi /etc/icinga2/conf.d/api-users.conf
+  systemctl restart icinga2
+  systemctl status icinga2
+  yum install epel-release
+  yum install centos-release-scl
+  yum install icingaweb2 icingacli
+  yum install httpd
+  systemctl start httpd.service
+  systemctl enable httpd.service
+  systemctl status httpd.service
+  systemctl start rh-php71-php-fpm.service
+  systemctl enable rh-php71-php-fpm.service
+  systemctl status rh-php71-php-fpm.service
+  yum install rh-php71-php-mysqlnd
+  icingacli setup token create
+  icingacli setup token show
+After installation, By using the generated token We can access the front end on the browser after following the below steps.
+
+Open the url http:// /icingaweb2/setup
+
+Enter the generated token and click next.
+
+Now next page will open with different modules, A On the Modules page, select modules you want to enable (at least, the Monitoring module is required), and then click the "Next" button.
+
+Next page will be opened with some errors due to selinux security and and time zone issue during configuration. Those issues can be over-ruled by following steps.
+
+Error: User Information is not writable. Solution: This error is due to selinux security, so do following steps
+
+Error: date.timezone error in /etc/opt/rh/rh-php71/php.ini Solution: This is due to configuration error, can been rectified by changing time zone on mentioned path.
+
+On the Authentication page, you need to choose the authentication method when accessing Icinga Web 2. Here, you can choose Database, and then click the "Next" button.
+
+Now database is configured to store user and user groups. And page looks like following snip.
+
+Credentials updated is follows, Resource Name: icingaweb_db ..Database Type: MySQL ..Host: localhost Database Name: icingaweb2 ..Username:root ..Password:
+
+On the Authentication Backend page, using the default backend name icingaweb2, click the Next button to move on.
+
+Now application and login related configuration is done. .. ..Show Stacktraces: Checked ..User Preference Storage Type: Database ..Logging Type: Syslog ..Logging Level: Error ..Application Prefix: icingaweb2
+
+On the Review page, double check your configuration, and then click the Next button.
+
+On the Monitoring Module Configuration Welcome page, click the Next button.
+
+On the Monitoring Backend page, use the default backend name icinga and backend type IDO, and then click the "Next" button.
+
+On the Monitoring IDO Resource page, input IDO database details you setup earlier, and then click the "Next" button. .. ..Credentials entered is follows Resource Name: icinga_ido ..Database Type: MySQL ..Host: localhost ..Database Name: icinga ..Username: icinga ..Password: icinga
+
+On the Command Transport page, still use these default values listed below. Click the Next button to move on. ..The credentials given are follows, ..Transport Name: icinga2 ..Transport Type: Local Command File ..Command File: /var/run/icinga2/cmd/icinga2.cmd On the Monitoring Security page, still use the default value ..Protected Custom Variables: pw,pass,community ..Now click on Next button to go next page
+
+On the review page, double check your configuration, and then click the Finish button.
+
+On the Congratulations! page, click the Login to Icinga Web 2 button to jump to the Icinga Web 2 login page. Use the Icinga Web 2 administrative account and password you setup earlier to log in. Feel free to explore the Icinga Web 2 dashboard.
+
+Now On icinga2 home page enter the credentials to login.
+
+After logging in, Locally configure host is displayed in icinga2 dashboard with all utilities.
